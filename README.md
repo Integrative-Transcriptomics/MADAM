@@ -1,4 +1,4 @@
-# MADAM
+# MADAM - iMproving Ancient Dna AsseMbly
 Requirements:
 - jdk7
 - bwa
