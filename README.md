@@ -6,6 +6,5 @@ Requirements:
 - ClipAndMerge: https://github.com/apeltzer/ClipAndMerge
 - sga: https://github.com/jts/sga
 - SOAPdenovo2
-- velvet
 - MEGAHIT
 - qualimap
