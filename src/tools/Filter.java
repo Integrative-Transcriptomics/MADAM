@@ -69,7 +69,7 @@ public class Filter extends ATool {
 		options.addOption("p", "prefix", true, "the prefix for the mapping files ["+this.prefix+"]");
 		options.addOption("f", "filter", true, "the name of the filtered contigs\n\t\t["+this.filteredName+"]");
 		options.addOption("m", "minFilter", true, "the minimum number of reads that have to map against a contig to keep ["+this.minMapped+"]");
-		options.addOption("l", "length", true, "the minimum length of a contig to keep [NULL]");
+		options.addOption("l", "length", true, "the minimum length of a contig to keep ["+this.length+"]");
 		options.addOption(OptionBuilder.withLongOpt("output")
 				.withArgName("OUTPUT")
 				.withDescription("the output Directory")
