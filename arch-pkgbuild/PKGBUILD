@@ -9,12 +9,12 @@ arch=('any')
 #url="https://github.com/Integrative-Transcriptomics/MADAM"
 license=('custom')
 depends=('java-environment')
-source=("ClipAndMerge-${pkgver}.jar" "starter.sh")
+source=("MADAM-${pkgver}.jar" "starter.sh")
 noextract=("MADAM-${pkgver}.jar")
 md5sums=('SKIP' 'SKIP')
 
 package() {
-  install -D -m755 "${srcdir}/ClipAndMerge-${pkgver}.jar" "${pkgdir}/opt/$pkgname/madam-${pkgver}.jar"
+  install -D -m755 "${srcdir}/MADAM-${pkgver}.jar" "${pkgdir}/opt/$pkgname/MADAM-${pkgver}.jar"
   install -D -m755 "${srcdir}/starter.sh" "${pkgdir}/opt/$pkgname/starter.sh"
   install -D -m755 "${pkgdir}/opt/$pkgname/starter.sh" "${pkgdir}/usr/bin/madam"
 }
