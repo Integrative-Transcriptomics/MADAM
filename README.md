@@ -17,7 +17,7 @@ This starter script should contain the following line:
 <pre><code>java -jar ClipAndMerge $*</code></pre>
 
 ## generating the jar file
-This program can be built with gradle ([https://gradle.org/]). for that just type
+This program can be built with gradle (https://gradle.org). for that just type
 
 `gradle build`
 
