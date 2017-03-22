@@ -16,7 +16,10 @@ This starter script should contain the following line:
 
 <pre><code>java -jar ClipAndMerge $*</code></pre>
 
-The libraries that are relevant for the compilation are contained in the "lib" folder
+## generating the jar file
+This program can be built with gradle ([https://gradle.org/]). for that just type
+`gradle build`
+The jar-files then contained in the build/libs folder
 
 ## Tools
 The following tools are available:
@@ -84,7 +87,7 @@ Run the pipeline as described in the paper "Improving ancient DNA genome assembl
 - -in1, --input1 &lt;INPUT1&gt;: the forward and reverse fastq files
 - -in2, --input2 &lt;INPUT2&gt;: the forward and reverse fastq files
 - -k, --kmer &lt;KMER&gt;: the Kmers to use [37,47,...,127]
-- -l, --filterlength &lt;arg&gt;: the minimum length of a contig to keep [0]
+- -l, --filterlength &lt;arg&gt;: the minimum length of a contig to keep [1000]
 - -m, --minFilter &lt;arg&gt;: the minimum number of reads that have to map against a contig to keep [1]
 - -n, --no_merge: Do not merge the reads
 - -o, --output &lt;OUTPUT&gt;: the output Directory
