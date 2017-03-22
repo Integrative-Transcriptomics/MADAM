@@ -21,7 +21,7 @@ This program can be built with gradle ([https://gradle.org/]). for that just typ
 
 `gradle build`
 
-The jar-files then contained in the build/libs folder
+The jar-files are then contained in the build/libs folder
 
 ## Tools
 The following tools are available:
