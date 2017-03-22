@@ -7,9 +7,9 @@ The following software has to be installed in order for the software to run:
 - samtools: http://samtools.sourceforge.net/
 - ClipAndMerge: https://github.com/apeltzer/ClipAndMerge
 - sga: https://github.com/jts/sga
-- SOAPdenovo2
-- MEGAHIT
-- qualimap
+- SOAPdenovo2: https://sourceforge.net/projects/soapdenovo2/files/SOAPdenovo2/
+- MEGAHIT: https://github.com/voutcn/megahit
+- qualimap: http://qualimap.bioinfo.cipf.es/
 
 Note: Clip&Merge is actually a java program. For correct usage, the program has to be wrapped in a starter script that can be set in the MADAM script.
 This starter script should contain the following line:
