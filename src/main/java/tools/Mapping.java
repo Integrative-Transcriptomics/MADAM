@@ -21,10 +21,12 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import datastructures.FastAEntry;
+import htsjdk.samtools.SAMRecord;
+import htsjdk.samtools.SamReader;
+import htsjdk.samtools.SamReaderFactory;
+import htsjdk.samtools.ValidationStringency;
 import io.FastAReader;
 import main.Madam;
-import net.sf.samtools.SAMFileReader;
-import net.sf.samtools.SAMRecord;
 import pipelines.APipeline;
 import pipelines.Inputs;
 import utilities.Tools;
@@ -229,9 +231,10 @@ public class Mapping extends ATool {
 		this.gaps.append("\t");
 		this.gaps.append("gap_length");
 		this.gaps.append("\n");
-		@SuppressWarnings("resource")
-		SAMFileReader inputSam = new SAMFileReader(new File(samFile));
-		inputSam.setValidationStringency(SAMFileReader.ValidationStringency.SILENT);
+//		@SuppressWarnings("resource")
+//		SamReader inputSam = new SamReader(new File(samFile));
+		SamReader inputSam = SamReaderFactory.makeDefault().validationStringency(ValidationStringency.SILENT).open(new File(samFile));
+//		inputSam.setValidationStringency(SAMReader.ValidationStringency.SILENT);
 		@SuppressWarnings("rawtypes")
 		Iterator it = inputSam.iterator();
 		int currPos = 1;

@@ -1,0 +1,88 @@
+import org.apache.tools.ant.filters.*
+version '1.0'
+
+project.ext{
+	title = "MADAM"
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'com.jfrog.bintray'
+    apply plugin: 'eclipse-wtp'
+}
+
+dependencies {
+	compile group: 'commons-cli', name: 'commons-cli', version: '1.2'
+	compile 'com.github.samtools:htsjdk:2.+'
+    compile 'com.google.guava:guava:+'
+    compile 'commons-io:commons-io:2.4'
+    compile 'args4j:args4j:2.33'
+}
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.1'
+    }
+}
+
+sourceCompatibility = 1.8
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes("Implementation-Title": project.title,
+                "Implementation-Version": version, "main-Class": "main.Madam")
+    }
+    doFirst {
+        from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar //, javadocJar
+}
+
+processResources {
+	filesMatching('version.properties'){
+    	expand projectVersion: project.version
+    }
+	filesMatching('title.properties'){
+    	expand projectTitle: project.title
+    }
+} 
+
+
+
+eclipse.classpath.file {
+    withXml { xml ->
+        def node = xml.asNode()
+        node.remove( node.find { it.@path == 'org.eclipse.jst.j2ee.internal.web.container' } )
+        node.appendNode( 'classpathentry', [ kind: 'con', path: 'org.eclipse.jst.j2ee.internal.web.container', exported: 'true'])
+    }
+}

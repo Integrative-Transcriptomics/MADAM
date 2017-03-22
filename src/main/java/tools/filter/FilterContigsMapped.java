@@ -12,9 +12,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import datastructures.FastAEntry;
+import htsjdk.samtools.SAMRecord;
+import htsjdk.samtools.SamReader;
+import htsjdk.samtools.SamReaderFactory;
+import htsjdk.samtools.ValidationStringency;
 import io.FastAReader;
-import net.sf.samtools.SAMFileReader;
-import net.sf.samtools.SAMRecord;
 
 /**
  * @author Alexander Seitz
@@ -53,9 +55,10 @@ public class FilterContigsMapped {
 	}
 
 	private void getHeadersInSamFile(String samFile) {
-		@SuppressWarnings("resource")
-		SAMFileReader inputSam = new SAMFileReader(new File(samFile));
-		inputSam.setValidationStringency(SAMFileReader.ValidationStringency.SILENT);
+//		@SuppressWarnings("resource")
+//		SAMFileReader inputSam = new SAMFileReader(new File(samFile));
+//		inputSam.setValidationStringency(SAMFileReader.ValidationStringency.SILENT);
+		SamReader inputSam = SamReaderFactory.makeDefault().validationStringency(ValidationStringency.SILENT).open(new File(samFile));
 		@SuppressWarnings("rawtypes")
 		Iterator it = inputSam.iterator();
 		while(it.hasNext()){

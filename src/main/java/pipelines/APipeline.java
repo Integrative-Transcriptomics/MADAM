@@ -74,7 +74,7 @@ public abstract class APipeline {
 				.create("a"));
 		options.addOption("f", "forward", true, "the forward adapter\n\t\t["+this.adapterF+"]");
 		options.addOption("h", "help", false, "show this help page");
-		options.addOption("l", "filterlength", true, "the minimum length of a contig to keep [NULL]");
+		options.addOption("l", "filterlength", true, "the minimum length of a contig to keep ["+this.filterLength+"]");
 		options.addOption("m", "minFilter", true, "the minimum number of reads that have to map against a contig to keep ["+filterMinMapped+"]");
 		options.addOption("q", "quality", true, "Minimum base quality for quality trimming ["+this.trimQual+"]");
 		options.addOption("r", "reverse", true, "the reverse adapter\n\t\t["+this.adapterR+"]");

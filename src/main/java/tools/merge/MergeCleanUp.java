@@ -10,8 +10,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import net.sf.samtools.SAMFileReader;
-import net.sf.samtools.SAMRecord;
+import htsjdk.samtools.SAMRecord;
+import htsjdk.samtools.SamReader;
+import htsjdk.samtools.SamReaderFactory;
+import htsjdk.samtools.ValidationStringency;
 import utilities.Pair;
 import utilities.Utilities;
 
@@ -19,7 +21,7 @@ public class MergeCleanUp {
 	
 	private String folder;
 	private String inputFileName;
-	private String outputFileName;
+//	private String outputFileName;
 	private String selfMapped;
 	private Integer threads;
 	private List<Pair<Set<String>, Set<SAMRecord>>> toResolve;
@@ -27,7 +29,7 @@ public class MergeCleanUp {
 	public MergeCleanUp(String folder, String inputName, String outputName, Integer threads){
 		this.folder = folder;
 		this.inputFileName = inputName;
-		this.outputFileName = outputName;
+//		this.outputFileName = outputName;
 		this.threads = threads;
 		this.selfMapped = this.folder + "/mappedSelf.bam";
 		this.toResolve = new LinkedList<Pair<Set<String>, Set<SAMRecord>>>();
@@ -36,9 +38,10 @@ public class MergeCleanUp {
 	}
 
 	private void parseBam() {
-		@SuppressWarnings("resource")
-		SAMFileReader inputSam = new SAMFileReader(new File(this.selfMapped));
-		inputSam.setValidationStringency(SAMFileReader.ValidationStringency.SILENT);
+//		@SuppressWarnings("resource")
+//		SAMFileReader inputSam = new SAMFileReader(new File(this.selfMapped));
+//		inputSam.setValidationStringency(SAMFileReader.ValidationStringency.SILENT);
+		SamReader inputSam = SamReaderFactory.makeDefault().validationStringency(ValidationStringency.SILENT).open(new File(this.selfMapped));
 		@SuppressWarnings("rawtypes")
 		Iterator it = inputSam.iterator();
 		while(it.hasNext()){
