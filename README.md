@@ -2,7 +2,7 @@
 ## Dependencies
 The following software has to be installed in order for the software to run:
 
-- jdk7
+- jdk7+
 - bwa: http://bio-bwa.sourceforge.net/
 - samtools: http://samtools.sourceforge.net/
 - ClipAndMerge: https://github.com/apeltzer/ClipAndMerge
