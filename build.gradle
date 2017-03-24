@@ -110,8 +110,8 @@ publishing {
 
 
 bintray {
-    user = System.getenv('binUser')
-    key = System.getenv('binKey')
+    user = binUser
+    key = binKey
     publications = ['MyPublication']
     publish = true
     override = true
