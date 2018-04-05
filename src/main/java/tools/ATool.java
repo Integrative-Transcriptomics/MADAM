@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -124,9 +127,12 @@ public abstract class ATool implements ITool {
 
 	protected synchronized void writeExecutionLog(String[] command){
 		String cmd = getCommand(command);
+		DateFormat dateFormat = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
+		String currDate = "# "+dateFormat.format(new Date());
 		if(this.doExecutionLog){
 			try {
 				PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(this.executionLog, true)));
+				out.println(currDate);
 				out.println(cmd);
 				out.flush();
 				out.close();

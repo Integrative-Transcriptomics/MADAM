@@ -152,7 +152,7 @@ public class SoapDenovo2 extends Assembly {
 		writeExecutionLog(new String[]{"# running Assembly using multiple k-mers with SOAPdenovo2: "});
 		this.workingDir = Utilities.removeTrailingSlashFromFolder(this.workingDir);
 		Utilities.createOutFolder(this.workingDir);
-		this.configFile = this.workingDir + "/" + "soap.conf"; 
+		this.configFile = this.workingDir + "/" + "soap.conf";
 		generateConfigFile();
 		runAssembly();
 	}
@@ -249,6 +249,9 @@ public class SoapDenovo2 extends Assembly {
 	@Override
 	protected void setVariables(APipeline pipeline) {
 		this.workingDir = pipeline.getOutputFolder() + "/" + pipeline.getCurrPipelineNumber() + "_" + this.pipelineFolderName;
+		if(!new File(this.workingDir).exists()) {
+			Utilities.createOutFolder(this.workingDir);
+		}
 		this.threads = pipeline.getThreads();
 		List<String> fastQFiles = pipeline.getFastQFiles();
 		this.setExecutionLog(pipeline.getExecutionLog());

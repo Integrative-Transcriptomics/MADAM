@@ -109,6 +109,7 @@ publishing {
 } */
 
 
+/*
 bintray {
     user = binUser
     key = binKey
@@ -130,3 +131,4 @@ bintray {
 
     }
 }
+*/

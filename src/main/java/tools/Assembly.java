@@ -198,8 +198,7 @@ public class Assembly extends ATool {
 		}
 		for(String inputFastQ: files){
 			try {
-				@SuppressWarnings("resource")
-				BufferedReader br = new BufferedReader(new FileReader(inputFastQ));
+				BufferedReader br = Utilities.getReader(inputFastQ);
 				String currLine = "";
 				Double i = 0.0;
 				while((currLine = br.readLine()) != null){
@@ -216,6 +215,7 @@ public class Assembly extends ATool {
 				e.printStackTrace();
 			}
 		}
+		Utilities.writeToFile(""+result, new File(this.readLengthFile));
 		return result;
 	}
 	

@@ -8,10 +8,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
@@ -21,6 +24,23 @@ import java.util.zip.GZIPInputStream;
  *
  */
 public class Utilities {
+	
+	public static BufferedReader getReader(String file){
+		BufferedReader br = null;
+		try {
+			if(file.endsWith(".gz")){
+				InputStream fileStream = new FileInputStream(file);
+				InputStream gzipStream = new GZIPInputStream(fileStream);
+				Reader decoder = new InputStreamReader(gzipStream, "UTF-8");
+				br = new BufferedReader(decoder);
+			}else{
+				br = new BufferedReader(new FileReader(new File(file)));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return br;
+	}
 	
 	public static void writeToFile(String s, File f){
 		try {
@@ -166,19 +186,19 @@ public class Utilities {
 	}
 	
 	
-	@SuppressWarnings("resource")
 	public static boolean checkFastA(String file){
 		boolean fileCorrect=true;
 		try {
 			BufferedReader bfr;
-			bfr = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			bfr = getReader(file);
+//			bfr = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 			String currLine = "";
 			double line = 0.0;
 			while(fileCorrect && (currLine=bfr.readLine()) != null){
 				line++;
 				if(currLine.startsWith(">")){
 					continue;
-				}else if(!currLine.matches("[ACGTN]+")){
+				}else if(currLine.length()>0 && !currLine.matches("[ACGTN]+")){
 					System.err.println("Error in fasta file: "+file);
 					System.err.println("in line: "+line+": "+currLine);
 					fileCorrect=false;
@@ -193,12 +213,12 @@ public class Utilities {
 	
 	public static boolean checkFastQ(String file){
 		try {
-			BufferedReader bfr;
-			if(file.endsWith("gz")){
-				bfr = new BufferedReader(new InputStreamReader(new GZIPInputStream(new FileInputStream(file))));
-			}else{
-				bfr = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-			}
+			BufferedReader bfr = getReader(file);
+//			if(file.endsWith("gz")){
+//				bfr = new BufferedReader(new InputStreamReader(new GZIPInputStream(new FileInputStream(file))));
+//			}else{
+//				bfr = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+//			}
 			String currLine = "";
 			int i=0;
 			String seq="";
