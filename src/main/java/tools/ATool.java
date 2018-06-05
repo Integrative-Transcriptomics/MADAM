@@ -96,7 +96,7 @@ public abstract class ATool implements ITool {
 		}
 	}
 
-	private void runSuccessful() {
+	protected void runSuccessful() {
 		File done = new File(this.workingDir+"/"+this.doneFilename);
 		try {
 			done.createNewFile();
@@ -105,7 +105,7 @@ public abstract class ATool implements ITool {
 		}
 	}
 
-	private boolean alreadyRun() {
+	protected boolean alreadyRun() {
 		File done = new File(this.workingDir+"/"+this.doneFilename);
 		return done.exists();
 	}

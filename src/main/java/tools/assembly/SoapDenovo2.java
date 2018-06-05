@@ -160,24 +160,30 @@ public class SoapDenovo2 extends Assembly {
 
 	
 	private void runAssembly() {
+		String tmpWorkingDir = this.workingDir;
 		for(Integer k: this.ks){
-			String currOutFolder = this.workingDir + "/" + "K" + k;
-			String contigFile = currOutFolder + "/" + this.prefix + ".contig";
+			if(alreadyRun()) {
+				continue;
+			}
+			this.workingDir = tmpWorkingDir + "/" + "K" + k;
+//			String currOutFolder = this.workingDir + "/" + "K" + k;
+			
+			String contigFile = this.workingDir + "/" + this.prefix + ".contig";
 			this.contigFiles.add(contigFile);
 			this.contigFileNames.add("SOAP_K"+k);
 			if(new File(contigFile).exists()){
 				continue;
 			}
-			Utilities.createOutFolder(currOutFolder);
+			Utilities.createOutFolder(this.workingDir);
 			String[] runAssembly = new String[0];
 			if(k<=63){
 				runAssembly = new String[]{ "SOAPdenovo-63mer", "all", "-K",
 						k.toString(), "-p", this.threads.toString(), "-s",
-						this.configFile, "-o", currOutFolder+"/"+this.prefix };
+						this.configFile, "-o", this.workingDir+"/"+this.prefix };
 			}else{
 				runAssembly = new String[]{ "SOAPdenovo-127mer", "all", "-K",
 						k.toString(), "-p", this.threads.toString(), "-s",
-						this.configFile, "-o", currOutFolder+"/"+this.prefix };
+						this.configFile, "-o", this.workingDir+"/"+this.prefix };
 			}
 			Process process;
 			try {
@@ -186,6 +192,8 @@ public class SoapDenovo2 extends Assembly {
 				process.waitFor();
 			} catch (IOException | InterruptedException e) {
 			}
+			runSuccessful();
+			this.workingDir = tmpWorkingDir;
 		}
 	}
 

@@ -134,9 +134,13 @@ public class Megahit extends Assembly {
 	}
 	
 	private void runAssembly() {
+		String tmpWorkingDir = this.workingDir;
 		for(Integer k: this.ks){
-			String currOutFolder = this.workingDir + "/" + "K" + k;
-			String contigFile = currOutFolder + "/final.contigs.fa";
+			if(alreadyRun()) {
+				continue;
+			}
+			this.workingDir = tmpWorkingDir + "/" + "K" + k;
+			String contigFile = this.workingDir + "/final.contigs.fa";
 			this.contigFiles.add(contigFile);
 			this.contigFileNames.add("MEGAHIT_K"+k);
 			if(new File(contigFile).exists()){
@@ -145,9 +149,9 @@ public class Megahit extends Assembly {
 //			String[] runAssembly = new String[]{"megahit" -r $in --k-list 37,47,57,67,77,87,97,107,127 -o megalist -t 4}
 			String[] runAssembly = new String[0];
 			if(this.hasInputFile2){
-				runAssembly = new String[]{"/share/home/seitza/software/megahit/megahit", "-1", this.inputFile, "-2", this.inputFile2, "--k-list", ""+k, "-o", currOutFolder, "-t", ""+this.threads};
+				runAssembly = new String[]{"/share/home/seitza/software/megahit/megahit", "-1", this.inputFile, "-2", this.inputFile2, "--k-list", ""+k, "-o", this.workingDir, "-t", ""+this.threads};
 			}else{
-				runAssembly = new String[]{"/share/home/seitza/software/megahit/megahit", "-r", this.inputFile, "--k-list", ""+k, "-o", currOutFolder, "-t", ""+this.threads};
+				runAssembly = new String[]{"/share/home/seitza/software/megahit/megahit", "-r", this.inputFile, "--k-list", ""+k, "-o", this.workingDir, "-t", ""+this.threads};
 			}
 			Process process;
 			try {
@@ -156,6 +160,8 @@ public class Megahit extends Assembly {
 				process.waitFor();
 			} catch (IOException | InterruptedException e) {
 			}
+			runSuccessful();
+			this.workingDir = tmpWorkingDir;
 		}
 	}
 	

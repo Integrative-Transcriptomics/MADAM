@@ -153,6 +153,9 @@ public class Mapping extends ATool {
 				this.workingDir = tmpWorkingDir+"/"+i+"_"+inputNames[i];
 				this.finalBam = this.workingDir + "/"+this.prefix+".sorted.bam";
 			}
+			if(alreadyRun()) {
+				continue;
+			}
 			String filteredFastaFile = this.workingDir + "/" + this.filteredFasta;
 //			this.output[i] = filteredFastaFile;
 //			this.outputNames[i] = this.inputNames[i]+"_mapped";
@@ -190,6 +193,7 @@ public class Mapping extends ATool {
 			getHeadersInBamFile(this.finalBam);
 			createFilteredFasta(inFile, filteredFastaFile);
 			createGapFile();
+			runSuccessful();
 			this.workingDir = tmpWorkingDir;
 		}
 	}

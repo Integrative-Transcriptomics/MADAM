@@ -197,6 +197,9 @@ public class Filter extends ATool {
 			if(this.input.length>1){
 				this.workingDir = tmpWorkingDir+"/"+this.inputNames[i];
 			}
+			if(alreadyRun()) {
+				continue;
+			}
 			this.filteredName = this.workingDir + "/" + tmpFilteredName;
 			Utilities.createOutFolder(this.workingDir);
 			String input = this.input[i];
@@ -247,6 +250,7 @@ public class Filter extends ATool {
 			if(this.deleteTmpContigFile){
 				Utilities.removeFile(this.tmpContigFile);
 			}
+			runSuccessful();
 			this.workingDir = tmpWorkingDir;
 			this.filteredName = tmpFilteredName;
 			writeExecutionLog(command.toArray(new String[command.size()]));
