@@ -140,6 +140,7 @@ public class SoapDenovo2 extends Assembly {
 			System.err.println(e.getMessage());
 			System.exit(0);
 		}
+		this.readLengthFile = this.workingDir+"/maxReadLength.txt";
 		checkAndRemoveTooLargeInputKs();
 		run();
 	}
@@ -151,6 +152,7 @@ public class SoapDenovo2 extends Assembly {
 	protected void run() {
 		writeExecutionLog(new String[]{"# running Assembly using multiple k-mers with SOAPdenovo2: "});
 		this.workingDir = Utilities.removeTrailingSlashFromFolder(this.workingDir);
+		this.readLengthFile = this.workingDir+"/maxReadLength.txt";
 		Utilities.createOutFolder(this.workingDir);
 		this.configFile = this.workingDir + "/" + "soap.conf";
 		generateConfigFile();
@@ -160,6 +162,7 @@ public class SoapDenovo2 extends Assembly {
 
 	
 	private void runAssembly() {
+		this.readLengthFile = this.workingDir+"/maxReadLength.txt";
 		String tmpWorkingDir = this.workingDir;
 		for(Integer k: this.ks){
 			if(alreadyRun()) {
@@ -257,6 +260,7 @@ public class SoapDenovo2 extends Assembly {
 	@Override
 	protected void setVariables(APipeline pipeline) {
 		this.workingDir = pipeline.getOutputFolder() + "/" + pipeline.getCurrPipelineNumber() + "_" + this.pipelineFolderName;
+		this.readLengthFile = this.workingDir+"/maxReadLength.txt";
 		if(!new File(this.workingDir).exists()) {
 			Utilities.createOutFolder(this.workingDir);
 		}

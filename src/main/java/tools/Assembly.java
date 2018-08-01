@@ -39,7 +39,7 @@ public class Assembly extends ATool {
 
 	public Assembly(String[] args){
 		super(Tools.assembly);
-		this.readLengthFile = this.workingDir+"/maxReadLength.txt";
+		this.readLengthFile = "";
 		if(!(args.length > 0)){
 			printHelp();
 			System.exit(0);

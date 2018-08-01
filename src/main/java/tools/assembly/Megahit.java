@@ -118,6 +118,7 @@ public class Megahit extends Assembly {
 			System.err.println(e.getMessage());
 			System.exit(0);
 		}
+		this.readLengthFile = this.workingDir+"/maxReadLength.txt";
 		checkAndRemoveTooLargeInputKs();
 		run();
 	}
@@ -129,11 +130,13 @@ public class Megahit extends Assembly {
 	protected void run() {
 		writeExecutionLog(new String[]{"# running Assembly using multiple k-mers with MEGAHIT: "});
 		this.workingDir = Utilities.removeTrailingSlashFromFolder(this.workingDir);
+		this.readLengthFile = this.workingDir+"/maxReadLength.txt";
 		Utilities.createOutFolder(this.workingDir); 
 		runAssembly();
 	}
 	
 	private void runAssembly() {
+		this.readLengthFile = this.workingDir+"/maxReadLength.txt";
 		String tmpWorkingDir = this.workingDir;
 		for(Integer k: this.ks){
 			if(alreadyRun()) {
@@ -189,6 +192,7 @@ public class Megahit extends Assembly {
 	@Override
 	protected void setVariables(APipeline pipeline) {
 		this.workingDir = pipeline.getOutputFolder() + "/" + pipeline.getCurrPipelineNumber() + "_" + this.pipelineFolderName;
+		this.readLengthFile = this.workingDir+"/maxReadLength.txt";
 		this.threads = pipeline.getThreads();
 		List<String> fastQFiles = pipeline.getFastQFiles();
 		this.setExecutionLog(pipeline.getExecutionLog());
