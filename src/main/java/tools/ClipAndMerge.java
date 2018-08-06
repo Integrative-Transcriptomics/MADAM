@@ -144,6 +144,9 @@ public class ClipAndMerge extends ATool {
 
 	@Override
 	protected void run() {
+		if(alreadyRun()) {
+			return;
+		}
 		writeExecutionLog(new String[]{"# running Clip&Merge: "});
 		LinkedList<String> tmpCommand = new LinkedList<String>();
 		tmpCommand.add("ClipAndMerge");
